@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Headers from "./Components/Headers/headers";
+import Pages from "./Components/MainPages/pages";
+import React, { createContext, useState, useEffect } from "react";
+import ProductsAPI from "./api/ProductsAPI";
+
+export const GlobalState = createContext();
+
 
 function App() {
+  const [token, setToken] = useState(false);
+
+
+
+  const state = {
+    token: [token, setToken],
+    productsAPI: ProductsAPI(),
+    
+  };
+
+ 
+ 
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalState.Provider value={state}>
+        <Router>
+          <Headers></Headers>
+          <Pages></Pages>
+        </Router>
+      </GlobalState.Provider>
+    </>
   );
 }
 
