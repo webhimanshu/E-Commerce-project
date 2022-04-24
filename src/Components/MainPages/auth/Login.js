@@ -1,8 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState ,useContext} from "react";
+import { Link ,useNavigate} from "react-router-dom";
+import { GlobalState } from "../../../App";
 const Login = () => {
+
+  const context = useContext(GlobalState);
+  const navigate=useNavigate();
+  const [token,setToken]=context.token;
+  
   const [state, setstate] = useState({
     email: "",
     password: "",
@@ -14,14 +19,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/user/login", { ...state });
-      localStorage.setItem("firstlogin", true);
-
-      window.location.href = "/";
+      const res= await axios.post("/user/login", { ...state });
+      
+     
+         setToken(res.data.accessToken)
+       localStorage.setItem("firstLogin", true);
+    
+       navigate("/")
     } catch (err) {
       window.alert(err.response.data.msg);
     }
-    setstate({email:"",password:""})
+    
   };
   return (
     <div className="border w-4/5  m-auto flex justify-center items-center h-[400px]">

@@ -6,6 +6,8 @@ import Pages from "./Components/MainPages/pages";
 import React, { createContext, useState, useEffect } from "react";
 import ProductsAPI from "./api/ProductsAPI";
 import axios from "axios";
+import UserAPI from "./api/UserAPI";
+import CategoryAPI from "./api/CategoryAPI";
 
 export const GlobalState = createContext();
 
@@ -16,25 +18,37 @@ function App() {
 
 
 
-    const refreshToken= async()=>{
-      const res=await axios.get('/user/refresh_token');
-      console.log(res);
-      setToken(res.data.accessToken)
-    }
+    // const refreshToken= async ()=>
+    // {
+     
+      
+    //   const res=await axios.get('/user/refresh_Token');
+       
+       
+    //    setToken(res.data.accessToken)
+       
+    // }
 
-useEffect(()=>{
-  const firstlogin=localStorage.getItem('firstlogin');
-  if(firstlogin) refreshToken();
-},[])
+  
+
+// useEffect(()=>{
+//   const firstLogin=localStorage.getItem('firstLogin')
+//  if(firstLogin){
+//   refreshToken();
+
+//  } 
+ 
+// },[])
 
   const state = {
     token: [token, setToken],
     productsAPI: ProductsAPI(),
-    
+    userAPI:UserAPI(token),
+    categoryAPI:CategoryAPI() 
   };
 
  
- 
+ console.log("Token in app",token)
   
   return (
     <>

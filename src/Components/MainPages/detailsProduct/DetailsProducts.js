@@ -7,10 +7,10 @@ const DetailsProducts = () => {
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
   const [detailproduct, setDetailsProduct] = useState([]);
-
+  const addCart=state.userAPI.addCart;
   useEffect(() => {
     if (params.id) {
-        console.log("Re render")
+     
       products.forEach(
         (product) => {
           if (product._id === params.id) setDetailsProduct(product);
@@ -35,7 +35,7 @@ const DetailsProducts = () => {
       <p className="">{detailproduct.description}</p>
       <p className="">{detailproduct.content}</p>
       <p className="">Sold :{detailproduct.sold}</p>
-      <Link to="/cart" className="bg-btn-color text-white uppercase inline-block mt-3 py-3 px-6" >Buy Now</Link>
+      <Link to="/cart" className="bg-btn-color text-white uppercase inline-block mt-3 py-3 px-6" onClick={()=>addCart(detailproduct)}>Buy Now</Link>
       </div>
     </div>
     
